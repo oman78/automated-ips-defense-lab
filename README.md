@@ -24,12 +24,15 @@ I developed a **Python Intrusion Prevention Script** designed to automate the "D
 The script utilizes the `psutil` library to bridge the gap between network connections and system processes.
 
 ```python
-# Core logic snippet:
+# Core logic: Cek port LISTEN yang tidak ada di whitelist
 connections = psutil.net_connections()
 for conn in connections:
     if conn.status == 'LISTEN' and conn.laddr.port not in WHITELIST:
-        # Automated Action: Identify and Kill
-        proc = psutil.Process(conn.pid)
+        port = conn.laddr.port
+        pid = conn.pid
+        
+        # Kill proses mencurigakan
+        proc = psutil.Process(pid)
         proc.kill()
 ```
 
