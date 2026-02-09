@@ -37,7 +37,7 @@ for conn in connections:
 ```
 
 ### 6. Summary of Results
-    The script successfully managed the security of the lab environment by:
+The script successfully managed the security of the lab environment by:
   1. Identifying unauthorized listeners (e.g., nc backdoors and unauthorized anydesk instances).
   2. Neutralizing threats within seconds of their appearance.
   3. Logging the binary paths of the intruders for further forensic analysis.
