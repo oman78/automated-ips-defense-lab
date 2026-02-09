@@ -42,4 +42,5 @@ The script successfully managed the security of the lab environment by:
   2. Neutralizing threats within seconds of their appearance.
   3. Logging the binary paths of the intruders for further forensic analysis.
 
-     Developed as a personal project to explore System Automation and Cybersecurity.
+
+Developed as a personal project to explore System Automation and Cybersecurity.
