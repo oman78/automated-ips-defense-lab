@@ -2,7 +2,7 @@ import psutil
 import time
 import os
 
-# Port yang diperbolehkan
+# Authorized ports
 WHITELIST = [22, 80, 1716]
 
 def run_monitor():
@@ -10,9 +10,10 @@ def run_monitor():
 
     try:
         while True:
+            # Get current network connections
             connections = psutil.net_connections()
             for conn in connections:
-                # Cek port LISTEN yang tidak ada di whitelist
+                # Check for LISTEN ports not in whitelist
                 if conn.status == 'LISTEN' and conn.laddr.port not in WHITELIST:
                     port = conn.laddr.port
                     pid = conn.pid
@@ -22,7 +23,7 @@ def run_monitor():
                         print(f"\n[!] Alert: Unauthorized port {port} detected")
                         print(f"[*] Process: {proc.name()} | Path: {proc.exe()}")
                         
-                        # Kill proses mencurigakan
+                        # Kill suspicious process
                         print(f"[*] Killing PID {pid}...")
                         proc.kill() 
                         print(f"[+] Success: Port {port} closed.")
@@ -31,7 +32,8 @@ def run_monitor():
                         pass
                     except Exception as e:
                         print(f"[-] Error: {e}")
-                        
+            
+            # Wait 2 seconds before next check
             time.sleep(2)
             
     except KeyboardInterrupt:
