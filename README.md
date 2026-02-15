@@ -43,4 +43,4 @@ The script successfully managed the security of the lab environment by:
   3. Logging the binary paths of the intruders for further forensic analysis.
 
 
-Developed as a personal project to explore System Automation and Cybersecurity.
+This project was developed for educational purposes in a controlled lab environment to explore system automation and defensive security principles.
