@@ -1,4 +1,4 @@
-#  Automated Process Monitor & IPS (Python)
+#  Automated Process Monitor & System Defense Tool
 
 ### 1. Project Overview
 This project is a practical demonstration of automating system defense. The goal was to build a script that can automatically detect and neutralize unauthorized network services in real-time. By utilizing existing containerized environments, I simulated a compromised host and developed a Python-based solution to maintain system integrity.
