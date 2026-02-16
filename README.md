@@ -19,20 +19,23 @@ I developed a **Python Intrusion Prevention Script** designed to automate the "D
 * **Real-time Auditing:** Continuously monitors the network stack for `LISTEN` states.
 * **Whitelisting Logic:** Only allows pre-approved ports (e.g., Port 22 for SSH, Port 80 for Docker).
 * **Automated Mitigation:** Automatically traces the PID (Process ID) to its source binary and terminates the process to prevent further access.
+* **Self-Preservation Logic:** Implemented PID filtering to prevent the script from terminating its own process during scanning.
 
 ### 5. How It Works
 The script utilizes the `psutil` library to bridge the gap between network connections and system processes.
 
 ```python
-# Core logic: Check for LISTEN ports not in whitelist
+# Core logic: Check for LISTEN ports and avoid self-termination
+current_pid = os.getpid()
 connections = psutil.net_connections()
+
 for conn in connections:
     if conn.status == 'LISTEN' and conn.laddr.port not in WHITELIST:
-        port = conn.laddr.port
-        pid = conn.pid
-        
+        if conn.pid == current_pid:
+            continue
+            
         # Kill suspicious process
-        proc = psutil.Process(pid)
+        proc = psutil.Process(conn.pid)
         proc.kill()
 ```
 
