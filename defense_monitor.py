@@ -7,17 +7,23 @@ WHITELIST = [22, 80, 1716]
 
 def run_monitor():
     print("IPS Monitor Active - Monitoring network processes...")
+    
+    current_pid = os.getpid()
 
     try:
         while True:
             # Get current network connections
             connections = psutil.net_connections()
             for conn in connections:
-                # Check for LISTEN ports not in whitelist
+                # Check for unauthorized LISTEN ports
                 if conn.status == 'LISTEN' and conn.laddr.port not in WHITELIST:
                     port = conn.laddr.port
                     pid = conn.pid
                     
+                    # Avoid self-termination
+                    if pid == current_pid:
+                        continue
+                        
                     try:
                         proc = psutil.Process(pid)
                         print(f"\n[!] Alert: Unauthorized port {port} detected")
