@@ -41,9 +41,10 @@ for conn in connections:
 
 ### 6. Summary of Results
 The script successfully managed the security of the lab environment by:
-  1. Identifying unauthorized listeners (e.g., nc backdoors and unauthorized anydesk instances).
-  2. Neutralizing threats within seconds of their appearance.
-  3. Logging the binary paths of the intruders for further forensic analysis.
+  1. Identifying unauthorized listeners (e.g., nc backdoors and unauthorized services outside the whitelist).
+  2. Differentiating between legitimate services (e.g., Docker DVWA on Port 80) and malicious intrusions.
+  3. Neutralizing threats within seconds and logging the binary paths for forensics.
+ 
 
 
 This project was developed for educational purposes in a controlled lab environment to explore system automation and defensive security principles.
