@@ -3,7 +3,7 @@ import time
 import os
 
 # Authorized ports
-WHITELIST = [22, 80, 1716]
+WHITELIST = [22, 80, 1716, 7070]
 
 def run_monitor():
     print("IPS Monitor Active - Monitoring network processes...")
