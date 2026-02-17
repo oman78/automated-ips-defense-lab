@@ -18,7 +18,7 @@ I developed a **Python Intrusion Prevention Script** designed to automate the "D
 
 **Key Technical Features:**
 * **Real-time Auditing:** Continuously monitors the network stack for `LISTEN` states.
-* **Whitelisting Logic:** Only allows pre-approved ports (e.g., Port 22 for SSH, Port 80 for Docker).
+* **Whitelisting Logic:** Only allows pre-approved ports (e.g., Port 80 for Docker, Port 22 for SSH, and other system-critical ports).
 * **Automated Mitigation:** Automatically traces the PID (Process ID) to its source binary and terminates the process to prevent further access.
 * **Self-Preservation Logic:** Implemented PID filtering to prevent the script from terminating its own process during scanning.
 
@@ -26,18 +26,26 @@ I developed a **Python Intrusion Prevention Script** designed to automate the "D
 The script utilizes the `psutil` library to bridge the gap between network connections and system processes.
 
 ```python
-# Core logic: Check for LISTEN ports and avoid self-termination
-current_pid = os.getpid()
-connections = psutil.net_connections()
-
+# Part of the core monitoring loop:
 for conn in connections:
+    # Check for unauthorized LISTEN ports
     if conn.status == 'LISTEN' and conn.laddr.port not in WHITELIST:
-        if conn.pid == current_pid:
+        port = conn.laddr.port
+        pid = conn.pid
+        
+        # Avoid self-termination
+        if pid == current_pid:
             continue
             
-        # Kill suspicious process
-        proc = psutil.Process(conn.pid)
-        proc.kill()
+        try:
+            proc = psutil.Process(pid)
+            print(f"\n[!] Alert: Unauthorized port {port} detected")
+            print(f"[*] Process: {proc.name()} | Path: {proc.exe()}")
+            
+            # Kill suspicious process
+            print(f"[*] Killing PID {pid}...")
+            proc.kill() 
+            print(f"[+] Success: Port {port} closed.")
 ```
 ### 6. Simulation & Demo
 > **Note on Scenario:** In this simulation, DVWA (Damn Vulnerable Web Application) is deployed as a legitimate but vulnerable service on Port 80. The script is configured to whitelist Port 80, acknowledging it as an authorized service. The primary objective is to detect and neutralize any unauthorized backdoors (such as a Netcat listener on Port 4444) that might appear if the host is exploited.
@@ -55,7 +63,7 @@ The demonstration follows a three-terminal workflow:
 The script successfully managed the security of the lab environment by:
   1. Identifying unauthorized listeners (e.g., nc backdoors and unauthorized services outside the whitelist).
   2. Differentiating between legitimate services (e.g., Docker DVWA on Port 80) and malicious intrusions.
-  3. Neutralizing threats within seconds and logging the binary paths for forensics.
+  3. Neutralizing threats within seconds while providing real-time reporting of binary paths for forensic identification.
  
 
 
