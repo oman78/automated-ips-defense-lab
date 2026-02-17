@@ -38,8 +38,19 @@ for conn in connections:
         proc = psutil.Process(conn.pid)
         proc.kill()
 ```
+### 6. Simulation & Demo
+> **Note on Scenario:** In this simulation, DVWA (Damn Vulnerable Web Application) is deployed as a legitimate but vulnerable service on Port 80. The script is configured to whitelist Port 80, acknowledging it as an authorized service. The primary objective is to detect and neutralize any unauthorized backdoors (such as a Netcat listener on Port 4444) that might appear if the host is exploited.
+[![Automated IPS Demo](https://img.youtube.com/vi/ediroLwLc-w/0.jpg)](https://www.youtube.com/watch?v=ediroLwLc-w)
 
-### 6. Summary of Results
+*Click the image above to watch the full demonstration on YouTube (Available in 2K/4K).*
+
+The demonstration follows a three-terminal workflow:
+#### 1. Terminal 1 (Defense): Running the Python script within the venv3 environment.
+#### 2. Terminal 2 (Authorized Service): Deploying the DVWA container. The script identifies the port but ignores it due to the whitelist.
+#### 3. Terminal 3 (Intrusion): Opening an unauthorized Netcat listener (nc -l -p 4444). The script instantly detects the violation, logs the event, and terminates the process.
+
+
+### 7. Summary of Results
 The script successfully managed the security of the lab environment by:
   1. Identifying unauthorized listeners (e.g., nc backdoors and unauthorized services outside the whitelist).
   2. Differentiating between legitimate services (e.g., Docker DVWA on Port 80) and malicious intrusions.
