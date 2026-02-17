@@ -45,9 +45,9 @@ for conn in connections:
 *Click the image above to watch the full demonstration on YouTube (Available in 2K/4K).*
 
 The demonstration follows a three-terminal workflow:
-1. Terminal 1 (Defense): Running the Python script within the venv3 environment.
-2. Terminal 2 (Authorized Service): Deploying the DVWA container. The script identifies the port but ignores it due to the whitelist.
-3. Terminal 3 (Intrusion): Opening an unauthorized Netcat listener (nc -l -p 4444). The script instantly detects the violation, logs the event, and terminates the process.
+* **Terminal 1 (Defense):** Running the Python script within the venv3 environment.
+* **Terminal 2 (Authorized Service):** Deploying the DVWA container. The script identifies the port but ignores it due to the whitelist.
+* **Terminal 3 (Intrusion):** Opening an unauthorized Netcat listener (nc -l -p 4444). The script instantly detects the violation, logs the event, and terminates the process.
 
 
 ### 7. Summary of Results
