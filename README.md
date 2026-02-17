@@ -6,7 +6,8 @@ This project is a practical demonstration of automating system defense. The goal
 ### 2. Lab Environment
 To build a realistic testing scenario, I utilized the following resources:
 * **Host:** Parrot Security OS (ARM64 Architecture).
-* **Target:** I deployed pre-configured vulnerable images (such as DVWA) using **Docker** to simulate open services.
+* **Authorized Service:** I deployed pre-configured vulnerable images (such as DVWA) using **Docker** to simulate open services.
+* **Intrusion Simulation:** I used Netcat (nc) to simulate unauthorized backdoor attempts and listener creation.
 * **Environment:** All Python developments were managed within a dedicated **Virtual Environment (`venv3`)** to ensure dependency isolation.
 
 ### 3. The Problem
