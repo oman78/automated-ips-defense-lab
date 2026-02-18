@@ -55,7 +55,7 @@ for conn in connections:
 
 The demonstration follows a three-terminal workflow:
 * **Terminal 1 (Defense):** Running the Python script within the venv3 environment.
-* **Terminal 2 (Authorized Service):** Deploying the DVWA container. The script identifies the port but ignores it due to the whitelist.
+* **Terminal 2 (Authorized Service):** Deploying the DVWA container. The script automatically filters out this activity based on the whitelist, demonstrating that the system only alerts on actual unauthorized intrusions.
 * **Terminal 3 (Intrusion):** Opening an unauthorized Netcat listener (nc -l -p 4444). The script instantly detects the violation, logs the event, and terminates the process.
 
 
